@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2"
-    tools:context=".RegisterActivity">
+    android:background="@drawable/bg_register_srceen"
+    tools:context=".view.RegisterActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -24,20 +24,19 @@
 
 
             <ImageView
-
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginVertical="12dp"
-                android:src="@drawable/logo2"
+                android:layout_marginVertical="24dp"
+                android:src="@drawable/img_logo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/SpecialTextView"
+                style="@style/SpecialTextViewAsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -45,30 +44,30 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtEmail"
                 style="@style/PrimaryLayoutEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:hint="Email "
-                android:id="@+id/edtEmail"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="#EF5350"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtPassword"
                 style="@style/PrimaryLayoutEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:hint="Mật Khẩu"
-                android:id="@+id/edtMatKhau"
-                app:endIconMode="password_toggle"
-                >
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -77,62 +76,59 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtCheckerPassword"
                 style="@style/PrimaryLayoutEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:id="@+id/edtMatKhauCk"
                 android:hint=" Nhập lại mật khẩu"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtName"
                 style="@style/PrimaryLayoutEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:id="@+id/edtHoTen"
                 android:hint="Họ tên">
 
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtPhoneNumber"
                 style="@style/PrimaryLayoutEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:hint="Số điện thoại"
-                android:id="@+id/edtSDT"
                 app:counterMaxLength="12">
 
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnDangKy"
+                android:id="@+id/btnRegister"
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Gửi" />
+                android:text="Đăng Ký" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -148,13 +144,13 @@
                     android:text="Đã có tài khoản?" />
 
                 <TextView
-                    android:textColor="@color/white"
-                    android:id="@+id/TvDangNhapNgay"
+                    android:id="@+id/tvLogin"
                     style="@style/SpecialTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="Đăng nhập ngay" />
+                    android:text="Đăng nhập ngay"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 

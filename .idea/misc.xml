@@ -3,43 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/font/acme.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/font/alatsi.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/font/aleo_light.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/font/allan.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/font/allerta.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/font/baloo.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/activity_dang_ki.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/activity_logo.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/activity_main.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/activity_seach.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/fragment_ca_nhan.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/fragment_trangchu.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/fragment_yeu_thich.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/item_chude.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/layout/item_tab_bai_viet.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/Admin/AndroidProject/app/src/main/res/menu/item_bottom.xml" value="0.21041666666666667" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/drawable-v24/bober_3.xml" value="0.1125" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1125" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1125" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/drawable/logo_bg.xml" value="0.1125" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/activity_dang_ki.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/activity_dang_ky.xml" value="0.10233029381965553" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/activity_login.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/activity_logo.xml" value="0.2" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/activity_main.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/activity_seach.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/fragment_ca_nhan.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/fragment_cv.xml" value="0.264" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/fragment_ho_so.xml" value="0.2" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/fragment_kham_pha.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/fragment_trangchu.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/fragment_yeu_thich.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/item_chude.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/layout/item_tab_bai_viet.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/menu/item_bottom.xml" value="0.21041666666666667" />
-        <entry key="..\:/Users/Admin/SupportPolyWork/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1125" />
+        <entry key="app/src/main/res/drawable/bg_dashed_border.xml" value="0.269" />
+        <entry key="app/src/main/res/layout-h700dp/fragment_create_cv.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/fragment_create_cv.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/fragment_education.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/fragment_experience.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/fragment_interesting.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/fragment_skill.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/fragment_upload_cv.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_cv_set_fragment_toolbar.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/layout_experience.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/menu/menu_create_cv.xml" value="0.2552372808892689" />
       </map>
     </option>
   </component>
