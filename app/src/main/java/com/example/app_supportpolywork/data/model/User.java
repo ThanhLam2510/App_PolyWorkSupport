@@ -1,25 +1,54 @@
 package com.example.app_supportpolywork.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
+    @SerializedName("_id")
     private String id;
+
+    @SerializedName("user_name")
+    private String userName;
+
+    @SerializedName("email")
     private String email;
-    private String name;
+
+    @SerializedName("full_name")
+    private String fullName;
+
+    @SerializedName("phone")
     private String phoneNumber;
+
+    @SerializedName("address")
     private String address;
-    private String gender;
+
+    @SerializedName("gender")
+    private int gender = -1;
+
+    @SerializedName("image")
+    private String image;
 
 
     public User() {
     }
 
-    public User(String id, String email, String name, String phoneNumber, String address, String gender) {
+    public User(String id, String userName, String email, String fullName, String phoneNumber, String address, int gender, String image) {
         this.id = id;
+        this.userName = userName;
         this.email = email;
-        this.name = name;
+        this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.gender = gender;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getId() {
@@ -38,12 +67,12 @@ public class User {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
@@ -62,11 +91,19 @@ public class User {
         this.address = address;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

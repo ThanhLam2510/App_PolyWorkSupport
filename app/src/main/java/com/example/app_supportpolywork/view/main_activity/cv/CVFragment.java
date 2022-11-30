@@ -1,8 +1,5 @@
 package com.example.app_supportpolywork.view.main_activity.cv;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +7,23 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.app_supportpolywork.BaseFragment;
 import com.example.app_supportpolywork.R;
+import com.example.app_supportpolywork.data.model.CV;
+import com.example.app_supportpolywork.data.model.User;
+import com.example.app_supportpolywork.data.network.CVManager;
 import com.example.app_supportpolywork.databinding.FragmentCvBinding;
+import com.example.app_supportpolywork.util.ShareFileUtil;
+import com.example.app_supportpolywork.util.TaskListener;
+import com.example.app_supportpolywork.view.main_activity.MainActivity;
+
+import java.util.List;
 
 
-public class CvFragment extends BaseFragment {
+public class CvFragment extends BaseFragment implements CvItemAdapter.OnClickCVItemListener {
 
     private FragmentCvBinding mBinding;
 
@@ -30,6 +33,21 @@ public class CvFragment extends BaseFragment {
     private Animation mToBottomAnim;
 
     private boolean mClicked;
+
+    private final TaskListener mGetCVListTask = new TaskListener() {
+        @Override
+        public void onSuccess(Object o) {
+            List<CV> cvList = (List<CV>) o;
+            mCvItemAdapter.submitList(cvList);
+        }
+
+        @Override
+        public void onError(Exception e) {
+//            makeToast(requireContext(), e.getMessage());
+        }
+    };
+
+    private CvItemAdapter mCvItemAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +82,7 @@ public class CvFragment extends BaseFragment {
     }
 
     private void setAnimation() {
-        if(mClicked) {
+        if (mClicked) {
             mBinding.btnNewCv.setAnimation(mFromBottomAnim);
             mBinding.btnUploadCv.setAnimation(mFromBottomAnim);
             mBinding.btnAddCv.setAnimation(mRotateOpenAnim);
@@ -76,7 +94,7 @@ public class CvFragment extends BaseFragment {
     }
 
     private void setVisibility() {
-        if(mClicked) {
+        if (mClicked) {
             mBinding.btnUploadCv.setVisibility(View.GONE);
             mBinding.btnNewCv.setVisibility(View.GONE);
         } else {
@@ -96,12 +114,28 @@ public class CvFragment extends BaseFragment {
     }
 
     private void setupCvs() {
+        mCvItemAdapter = new CvItemAdapter(this);
+        mBinding.rcvCV.setAdapter(mCvItemAdapter);
+        User user = ShareFileUtil.getUser(requireContext());
+        CVManager.getInstance().getCVListOfUser(user.getId(), mGetCVListTask);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((MainActivity) requireActivity()).openBottomNav();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mBinding = null;
+    }
+
+    @Override
+    public void onClickItem(CV cv) {
+        mNavController.navigate(
+                CvFragmentDirections.actionCvFragmentToCvItemFragment(cv)
+        );
     }
 }

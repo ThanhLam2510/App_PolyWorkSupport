@@ -2,6 +2,8 @@ package com.example.app_supportpolywork.util;
 
 import android.annotation.SuppressLint;
 
+import com.example.app_supportpolywork.data.model.User;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +18,7 @@ public class AdapterUtil {
 
     public static String getJobExpiry(String expiry) {
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
         try {
             Date date = simpleDateFormat.parse(expiry);
             if (date != null) {
@@ -39,5 +41,42 @@ public class AdapterUtil {
 
     public static String getNeededPeople(int startNeededNumberOfPeople, int endNeededNumberOfPeople) {
         return startNeededNumberOfPeople + " - " + endNeededNumberOfPeople + " người";
+    }
+
+    public static String getGenderFromCode2(int gender) {
+        switch (gender) {
+            case 0:
+                return "Nữ";
+            case 1:
+                return "Nam";
+            default:
+                return "Không yêu cầu";
+        }
+    }
+
+    public static String getGenderFromCode(int gender) {
+        switch (gender) {
+            case 0:
+                return "Nữ";
+            case 1:
+                return "Nam";
+            case -2:
+                return "";
+            default:
+                return "Khác";
+        }
+    }
+
+    public static int getCodeFromGender(String gender) {
+        switch (gender) {
+            case "Nữ":
+                return 0;
+            case "Nam":
+                return 1;
+            case "Khác":
+                return -1;
+            default:
+                return -2;
+        }
     }
 }

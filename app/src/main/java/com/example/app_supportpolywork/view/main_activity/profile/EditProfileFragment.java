@@ -7,26 +7,79 @@ import static com.example.app_supportpolywork.util.CommonUtil.validEmail;
 import static com.example.app_supportpolywork.util.CommonUtil.validNumberPhone;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.app_supportpolywork.BaseFragment;
 import com.example.app_supportpolywork.R;
 import com.example.app_supportpolywork.data.model.User;
+import com.example.app_supportpolywork.data.network.UserManager;
 import com.example.app_supportpolywork.databinding.FragmentEditProfileBinding;
-import com.example.app_supportpolywork.util.CommonUtil;
+import com.example.app_supportpolywork.util.AdapterUtil;
+import com.example.app_supportpolywork.util.ShareFileUtil;
+import com.example.app_supportpolywork.util.TaskListener;
+import com.example.app_supportpolywork.util.UploadImageUtil;
+import com.squareup.picasso.Picasso;
 
 public class EditProfileFragment extends BaseFragment {
 
     private FragmentEditProfileBinding mBinding;
-    private String mGender = "Nam";
+    private String mGender;
+
+    private Uri mImageUri;
+    private final ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+            mImageUri = result.getData().getData();
+            mBinding.imvAvatar.setImageURI(mImageUri);
+        } else {
+            mImageUri = null;
+            mBinding.imvAvatar.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.img_sample, null));
+        }
+    });
+
+    private final TaskListener mFindUserInfoTask = new TaskListener() {
+        @Override
+        public void onSuccess(Object o) {
+            mProgressDialog.dismiss();
+            mImageUri = null;
+            User user = (User) o;
+            if (user != null) {
+                Picasso.get().load(user.getImage()).placeholder(R.drawable.img_sample).error(R.drawable.img_sample).into(mBinding.imvAvatar);
+                mBinding.edtName.setText(user.getFullName());
+                mBinding.edtEmail.setText(user.getEmail());
+
+                if (user.getGender() != -2) {
+                    mBinding.edtGender.setText(AdapterUtil.getGenderFromCode(user.getGender()));
+                }
+
+                if (user.getPhoneNumber() != null) {
+                    mBinding.edtPhoneNumber.setText(user.getPhoneNumber());
+                }
+
+                if (user.getAddress() != null) {
+                    mBinding.edtAddress.setText(user.getAddress());
+                }
+                ShareFileUtil.saveUser(requireContext(), user);
+            }
+        }
+
+        @Override
+        public void onError(Exception e) {
+            makeToast(requireContext(), e.getMessage());
+        }
+    };
 
     @Nullable
     @Override
@@ -38,27 +91,28 @@ public class EditProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadInfo();
         setupEditGender();
-        setupUserInfo();
+        setupImvAvatar();
         setupBackBtn();
         setupSaveBtn();
     }
 
+    private void loadInfo() {
+        UserManager.getInstance().getInfo(ShareFileUtil.getUser(requireContext()).getId(), mFindUserInfoTask);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setupEditGender() {
-        mBinding.edtGender.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                showGenderPopup();
-                return true;
-            }
-            return false;
+        mBinding.edtGender.setOnClickListener(v -> {
+            showGenderPopup();
         });
     }
 
     private void showGenderPopup() {
         String[] arr = getResources().getStringArray(R.array.gender);
         AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
-                .setSingleChoiceItems(arr, -1, (dialog, which) -> {
+                .setSingleChoiceItems(arr, 0, (dialog, which) -> {
                     mGender = arr[which];
                 })
                 .setNegativeButton("Hủy", (dialog, which) -> {
@@ -72,23 +126,16 @@ public class EditProfileFragment extends BaseFragment {
         alertDialog.show();
     }
 
-    private void setupUserInfo() {
-        User user = getUser();
-        if (user != null) {
-            mBinding.edtName.setText(user.getName());
-            mBinding.edtAddress.setText(user.getAddress());
-            mBinding.edtEmail.setText(user.getEmail());
-            mBinding.edtGender.setText(user.getGender());
-            mBinding.edtPhoneNumber.setText(user.getPhoneNumber());
-        }
-    }
-
-    private User getUser() {
-        return new User("0", "lam@gmail.com", "Bùi Thanh Lâm", "0868358175", "Ba Đình, Hà Nội", "Nam");
-    }
-
     private void setupBackBtn() {
         mBinding.toolbar.setNavigationOnClickListener(v -> mNavController.popBackStack());
+    }
+
+    private void setupImvAvatar() {
+        mBinding.imvAvatar.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            mGetContent.launch(intent);
+        });
     }
 
     private void setupSaveBtn() {
@@ -109,7 +156,6 @@ public class EditProfileFragment extends BaseFragment {
                     validateGender(gender)) {
 
                 updateUser(name, email, address, phoneNumber, gender);
-
             }
 
         });
@@ -129,7 +175,7 @@ public class EditProfileFragment extends BaseFragment {
             return false;
         }
 
-        if(!validNumberPhone(phoneNumber)) {
+        if (!validNumberPhone(phoneNumber)) {
             makeToast(requireContext(), "Vui lòng nhập số điện thoại đúng định dạng");
             return false;
         }
@@ -150,7 +196,7 @@ public class EditProfileFragment extends BaseFragment {
             return false;
         }
 
-        if(!validEmail(email)) {
+        if (!validEmail(email)) {
             makeToast(requireContext(), "Vui lòng nhập email đúng định dạng");
             return false;
         }
@@ -165,13 +211,59 @@ public class EditProfileFragment extends BaseFragment {
         return true;
     }
 
-    private void updateUser(String name, String email, String address, String phoneNumber, String gender) {
+    private void updateUser(String fullName, String email, String address, String phoneNumber, String gender) {
         mProgressDialog.setMessage("Cập nhật thông tin ...");
         mProgressDialog.show();
 
+        User user = ShareFileUtil.getUser(requireContext());
+        user.setAddress(address);
+        user.setFullName(fullName);
+        user.setPhoneNumber(phoneNumber);
+        user.setGender(AdapterUtil.getCodeFromGender(gender));
+        user.setEmail(email);
+
+        if (mImageUri != null) {
+            UploadImageUtil.uploadImage(mImageUri, new TaskListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    String imageLink = (String) o;
+                    user.setImage(imageLink);
+                    UserManager.getInstance().changeProfile(user, new TaskListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            UserManager.getInstance().getInfo(user.getId(), mFindUserInfoTask);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            mProgressDialog.dismiss();
+                            makeToast(requireContext(), e.getMessage());
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    mProgressDialog.dismiss();
+                    makeToast(requireContext(), e.getMessage());
+                }
+            });
+        } else {
+            UserManager.getInstance().changeProfile(user, new TaskListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    UserManager.getInstance().getInfo(user.getId(), mFindUserInfoTask);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    mProgressDialog.dismiss();
+                    makeToast(requireContext(), e.getMessage());
+                }
+            });
+        }
 
     }
-
 
     @Override
     public void onDestroyView() {
