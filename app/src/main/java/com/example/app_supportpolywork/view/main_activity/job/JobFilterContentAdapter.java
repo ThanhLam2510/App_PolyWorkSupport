@@ -1,5 +1,6 @@
 package com.example.app_supportpolywork.view.main_activity.job;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -35,6 +36,7 @@ public class JobFilterContentAdapter extends ListAdapter<FilterField, JobFilterC
         holder.mBinding.tvName.setText(filterField.getValue());
         holder.mBinding.btnClear.setOnClickListener(v -> {
             mListener.onClearFilterField(filterField);
+            Log.e("TAG", "onBindViewHolder: a");
         });
     }
 

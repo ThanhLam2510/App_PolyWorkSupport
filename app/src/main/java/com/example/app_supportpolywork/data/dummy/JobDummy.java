@@ -1,8 +1,11 @@
 package com.example.app_supportpolywork.data.dummy;
 
+import com.example.app_supportpolywork.data.model.cv_model.Experience;
+import com.example.app_supportpolywork.data.model.support_model.ExperienceFilter;
 import com.example.app_supportpolywork.data.model.support_model.Gender;
 import com.example.app_supportpolywork.data.model.Job;
 import com.example.app_supportpolywork.data.model.support_model.Position;
+import com.example.app_supportpolywork.data.model.support_model.Salary;
 import com.example.app_supportpolywork.data.model.support_model.Technology;
 
 import java.util.ArrayList;
@@ -15,8 +18,10 @@ public class JobDummy {
     private static final List<String> workplaces = new ArrayList<>();
     private static final List<Job.WorkForm> workForm = new ArrayList<>();
     private static final List<Gender> genders = new ArrayList<>();
+    private static final List<Salary> salaries = new ArrayList<>();
     private static final List<Position> positions = new ArrayList<>();
     private static final List<Technology> technologies = new ArrayList<>();
+    private static final List<ExperienceFilter> experiencesFilter = new ArrayList<>();
 
     static {
         titles.add("Giảng Viên Java - Chuyên Viên Đào Tạo CNTT/Lập Trình");
@@ -41,6 +46,27 @@ public class JobDummy {
         genders.add(Gender.MALE);
         genders.add(Gender.FEMALE);
         genders.add(Gender.NONE);
+
+        experiencesFilter.add(ExperienceFilter.ALL);
+        experiencesFilter.add(ExperienceFilter.LESS_1);
+        experiencesFilter.add(ExperienceFilter.Y_1);
+        experiencesFilter.add(ExperienceFilter.Y_2);
+        experiencesFilter.add(ExperienceFilter.Y_3);
+        experiencesFilter.add(ExperienceFilter.Y_4);
+        experiencesFilter.add(ExperienceFilter.Y_5);
+        experiencesFilter.add(ExperienceFilter.OVER_5);
+
+        salaries.add(Salary.ALL);
+        salaries.add(Salary.SELECT1);
+        salaries.add(Salary.SELECT2);
+        salaries.add(Salary.SELECT3);
+        salaries.add(Salary.SELECT4);
+        salaries.add(Salary.SELECT5);
+        salaries.add(Salary.SELECT6);
+        salaries.add(Salary.SELECT7);
+        salaries.add(Salary.SELECT8);
+        salaries.add(Salary.SELECT9);
+        salaries.add(Salary.SELECT10);
 
         positions.add(Position.INTERN);
         positions.add(Position.FRESHER);

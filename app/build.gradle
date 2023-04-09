@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    def OkHttpVersion = "4.2.1"
+    def OkHttpVersion = "4.9.1"
     implementation "com.squareup.okhttp3:logging-interceptor:$OkHttpVersion"
 
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'

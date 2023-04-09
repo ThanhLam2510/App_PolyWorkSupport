@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 
 import com.example.app_supportpolywork.BaseFragment;
 import com.example.app_supportpolywork.data.model.Job;
+import com.example.app_supportpolywork.data.model.support_model.ExperienceFilter;
 import com.example.app_supportpolywork.data.model.support_model.Filter;
 import com.example.app_supportpolywork.data.model.support_model.FilterField;
 import com.example.app_supportpolywork.data.model.support_model.Position;
+import com.example.app_supportpolywork.data.model.support_model.Salary;
 import com.example.app_supportpolywork.data.model.support_model.Technology;
 import com.example.app_supportpolywork.data.network.JobManager;
 import com.example.app_supportpolywork.databinding.FragmentJobSearchingBinding;
@@ -24,7 +26,6 @@ import com.example.app_supportpolywork.view.main_activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class JobSearchingFragment extends BaseFragment implements JobFilterContentAdapter.OnClickFilterFieldListener, JobAdapter.JobAdapterListener {
     private FragmentJobSearchingBinding mBinding;
@@ -56,7 +57,7 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
     }
 
     private void setupFilterContentRcv() {
-        if (mFilter.getTechnology() != Technology.ALL || mFilter.getPosition() != Position.ALL) {
+        if (mFilter.getTechnology() != Technology.ALL || mFilter.getPosition() != Position.ALL || mFilter.getSalary() != Salary.ALL || mFilter.getExperienceFilter() != ExperienceFilter.ALL) {
             List<FilterField> filterFieldList = getFilterFields();
             mJobFilterContentAdapter = new JobFilterContentAdapter(this);
             mJobFilterContentAdapter.submitList(filterFieldList);
@@ -77,6 +78,14 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
         if (mFilter.getTechnology() != Technology.ALL) {
             result.add(mFilter.getTechnology());
         }
+
+        if (mFilter.getSalary() != Salary.ALL) {
+            result.add(mFilter.getSalary());
+        }
+
+        if (mFilter.getExperienceFilter() != ExperienceFilter.ALL) {
+            result.add(mFilter.getExperienceFilter());
+        }
         return result;
     }
 
@@ -85,7 +94,7 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
         if (filter != null) {
             mFilter = filter;
         } else {
-            mFilter = new Filter(Position.ALL, Technology.ALL);
+            mFilter = new Filter(Position.ALL, Technology.ALL, Salary.ALL, ExperienceFilter.ALL);
         }
     }
 
@@ -111,7 +120,7 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
             public void afterTextChanged(Editable s) {
                 mQueryString = s.toString();
                 mFilterJobList = getJobListByString(mQueryString);
-                if(mFilterJobList.size() == 0) {
+                if (mFilterJobList.size() == 0) {
                     mBinding.tvHint.setVisibility(View.VISIBLE);
                 } else {
                     mBinding.tvHint.setVisibility(View.GONE);
@@ -125,7 +134,7 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < mOriginJobList.size(); i++) {
             Job job = mOriginJobList.get(i);
-            if (passJobTitle(job, s) && passJobPosition(job) && passJobTechnology(job)) {
+            if (passJobTitle(job, s) && passJobPosition(job) && passJobTechnology(job) && passJobSalary(job) && passJobExp(job)) {
                 jobs.add(job);
             }
         }
@@ -140,6 +149,60 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
     private boolean passJobPosition(Job job) {
         if (mFilter.getPosition() == Position.ALL) return true;
         return job.getPosition().equals(mFilter.getPosition().value);
+    }
+
+    //done
+    private boolean passJobSalary(Job job) {
+        switch (mFilter.getSalary()) {
+            case ALL:
+                return true;
+            case SELECT1:
+                return job.getEndSalary() <= 3000000;
+            case SELECT2:
+                return job.getStartSalary() >= 3000000 && job.getEndSalary() < 5000000 || job.getStartSalary() == 5000000 || job.getEndSalary() == 5000000 ;
+            case SELECT3:
+                return job.getStartSalary() >= 5000000 && job.getEndSalary() < 7000000 || job.getStartSalary() == 7000000 ;
+            case SELECT4:
+                return job.getStartSalary() >= 7000000 && job.getStartSalary() <= 10000000 || job.getEndSalary() == 10000000;
+            case SELECT5:
+                return job.getStartSalary() >= 10000000 && job.getEndSalary() < 12000000 || job.getStartSalary() == 12000000 ;
+            case SELECT6:
+                return job.getStartSalary() >= 12000000 && job.getEndSalary() < 15000000 || job.getStartSalary() == 15000000 ;
+            case SELECT7:
+                return job.getStartSalary() >= 15000000 && job.getEndSalary() < 20000000 || job.getStartSalary() == 20000000 ;
+            case SELECT8:
+                return job.getStartSalary() >= 20000000 && job.getEndSalary() < 25000000 || job.getStartSalary() == 25000000 ;
+            case SELECT9:
+                return job.getStartSalary() >= 25000000 && job.getEndSalary() < 30000000 || job.getStartSalary() == 30000000 ;
+            case SELECT10:
+                return job.getStartSalary() >= 30000000;
+        }
+        return true;
+    }
+
+    //done
+    private boolean passJobExp(Job job) {
+        switch (mFilter.getExperienceFilter()) {
+            case ALL:
+                return true;
+            case NO_EXP:
+                return job.getExperience().toLowerCase().contains("Chưa có kinh nghiệm");
+            case LESS_1:
+                return job.getExperience().contains("< 1");
+            case Y_1:
+                return job.getExperience().contains("1");
+            case Y_2:
+                return job.getExperience().contains("2");
+            case Y_3:
+                return job.getExperience().contains("3");
+            case Y_4:
+                return job.getExperience().contains("4");
+            case Y_5:
+                return job.getExperience().contains("5");
+            case OVER_5:
+                return job.getExperience().contains("> 5");
+        }
+        return true;
     }
 
     private boolean passJobTitle(Job job, String s) {
@@ -177,10 +240,14 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
             mFilter.setPosition(Position.ALL);
         } else if (filterField instanceof Technology) {
             mFilter.setTechnology(Technology.ALL);
+        } else if (filterField instanceof Salary) {
+            mFilter.setSalary(Salary.ALL);
+        } else if (filterField instanceof ExperienceFilter) {
+            mFilter.setExperienceFilter(ExperienceFilter.ALL);
         }
 
         mFilterJobList = getJobListByString(mQueryString);
-        if(mFilterJobList.size() == 0) {
+        if (mFilterJobList.size() == 0) {
             mBinding.tvHint.setVisibility(View.VISIBLE);
         } else {
             mBinding.tvHint.setVisibility(View.GONE);

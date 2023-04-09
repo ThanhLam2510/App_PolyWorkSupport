@@ -59,7 +59,7 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
 
             @Override
             public void onError(Exception e) {
-                CommonUtil.makeToast(requireContext(), e.getMessage());
+                CommonUtil.makeToast(getContext(), e.getMessage());
             }
         });
     }

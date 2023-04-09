@@ -12,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.app_supportpolywork.BaseFragment;
+import com.example.app_supportpolywork.data.model.support_model.ExperienceFilter;
 import com.example.app_supportpolywork.data.model.support_model.Filter;
 import com.example.app_supportpolywork.data.model.support_model.Position;
+import com.example.app_supportpolywork.data.model.support_model.Salary;
 import com.example.app_supportpolywork.data.model.support_model.Technology;
 import com.example.app_supportpolywork.databinding.FragmentJobFilterBinding;
 
@@ -21,13 +23,15 @@ import com.example.app_supportpolywork.databinding.FragmentJobFilterBinding;
 public class JobFilterFragment extends BaseFragment {
     private FragmentJobFilterBinding mBinding;
 
-
     private SpinnerAdapter mTechnologyAdapter;
     private SpinnerAdapter mPositionAdapter;
+    private SpinnerAdapter mSalaryAdapter;
+    private SpinnerAdapter mExpAdapter;
     private Filter mFilter;
     private String[] mArrPosition;
     private String[] mArrTechnology;
-
+    private String[] mArrSalary;
+    private String[] mArrExp;
 
     @Nullable
     @Override
@@ -41,6 +45,8 @@ public class JobFilterFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mFilter = JobFilterFragmentArgs.fromBundle(getArguments()).getFilter();
         setupToolbar();
+        setupSpnExp();
+        setupSpnSalary();
         setupSpnPosition();
         setupSpnTechnology();
         setupSearchBtn();
@@ -51,6 +57,32 @@ public class JobFilterFragment extends BaseFragment {
     private void fillJobFilter() {
         mBinding.spnPosition.setSelection(getPositionOfJobPosition(mFilter.getPosition()));
         mBinding.spnTechnology.setSelection(getPositionOfJobTechnology(mFilter.getTechnology()));
+        mBinding.spnSalary.setSelection(getPositionOfJobSalary(mFilter.getSalary()));
+        mBinding.spnExp.setSelection(getExpOfJobSalary(mFilter.getExperienceFilter()));
+    }
+
+    private int getExpOfJobSalary(ExperienceFilter experienceFilter) {
+        if (experienceFilter == null) {
+            return 0;
+        }
+        for (int i = 0; i < mArrExp.length; i++) {
+            if (mArrExp[i].equals(experienceFilter.value)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private int getPositionOfJobSalary(Salary salary) {
+        if (salary == null) {
+            return 0;
+        }
+        for (int i = 0; i < mArrSalary.length; i++) {
+            if (mArrSalary[i].equals(salary.value)) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private int getPositionOfJobTechnology(Technology technology) {
@@ -81,6 +113,8 @@ public class JobFilterFragment extends BaseFragment {
         mBinding.btnCancel.setOnClickListener(v -> {
             mFilter.setPosition(Position.ALL);
             mFilter.setTechnology(Technology.ALL);
+            mFilter.setSalary(Salary.ALL);
+            mFilter.setExperienceFilter(ExperienceFilter.ALL);
             mNavController.navigate(JobFilterFragmentDirections.actionJobFilterFragmentToJobSearchingFragment2().setFilter(mFilter));
         });
     }
@@ -91,6 +125,73 @@ public class JobFilterFragment extends BaseFragment {
         });
     }
 
+    private void setupSpnExp() {
+        mArrExp = getStringExp();
+        mExpAdapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, mArrExp);
+        mBinding.spnExp.setAdapter(mExpAdapter);
+        mBinding.spnExp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mFilter.setExperienceFilter(getExpFromString(mArrExp[position]));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mFilter.setExperienceFilter(ExperienceFilter.ALL);
+            }
+        });
+    }
+
+    private ExperienceFilter getExpFromString(String s) {
+        for (int i = 0; i < ExperienceFilter.values().length; i++) {
+            if (s.equals(ExperienceFilter.values()[i].value)) {
+                return ExperienceFilter.values()[i];
+            }
+        }
+        return ExperienceFilter.ALL;
+    }
+
+    private String[] getStringExp() {
+        String[] strings = new String[ExperienceFilter.values().length];
+        for (int i = 0; i < ExperienceFilter.values().length; i++) {
+            strings[i] = ExperienceFilter.values()[i].value;
+        }
+        return strings;
+    }
+
+    private void setupSpnSalary() {
+        mArrSalary = getStringSalary();
+        mSalaryAdapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, mArrSalary);
+        mBinding.spnSalary.setAdapter(mSalaryAdapter);
+        mBinding.spnSalary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mFilter.setSalary(getSalaryFromString(mArrSalary[position]));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mFilter.setSalary(Salary.ALL);
+            }
+        });
+    }
+
+    private Salary getSalaryFromString(String s) {
+        for (int i = 0; i < Salary.values().length; i++) {
+            if (s.equals(Salary.values()[i].value)) {
+                return Salary.values()[i];
+            }
+        }
+        return Salary.ALL;
+    }
+
+    private String[] getStringSalary() {
+        String[] strings = new String[Salary.values().length];
+        for (int i = 0; i < Salary.values().length; i++) {
+            strings[i] = Salary.values()[i].value;
+        }
+        return strings;
+    }
     private void setupSpnPosition() {
         mArrPosition = getStringPosition();
         mPositionAdapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, mArrPosition);
