@@ -95,5 +95,6 @@ public interface Service {
             @Field("job_id") String jobId
     );
 
-
+    @GET("/api/company")
+    Call<ResponseBody> getCompany();
 }

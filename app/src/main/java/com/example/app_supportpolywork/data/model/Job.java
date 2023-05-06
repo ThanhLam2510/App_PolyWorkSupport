@@ -24,6 +24,16 @@ public class Job  implements Serializable {
     private String position;
     private String expiryApply;
 
+    private String companyCode;
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
     public String getId() {
         return id;
     }
@@ -158,7 +168,7 @@ public class Job  implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Job job = (Job) o;
-        return getStartSalary() == job.getStartSalary() && getEndSalary() == job.getEndSalary() && Objects.equals(getExpiryApply(), job.getExpiryApply()) && Objects.equals(getAvatar(), job.getAvatar()) && Objects.equals(getTitle(), job.getTitle())  && Objects.equals(getWorkForm(), job.getWorkForm()) && Objects.equals(getWorkPlace(), job.getWorkPlace()) && Objects.equals(getGender(), job.getGender()) && Objects.equals(getExperience(), job.getExperience()) && Objects.equals(getDescription(), job.getDescription()) && Objects.equals(getBenefits(), job.getBenefits()) && Objects.equals(getRequirement(), job.getRequirement()) && Objects.equals(getTechnology(), job.getTechnology()) && Objects.equals(getPosition(), job.getPosition());
+        return getStartSalary() == job.getStartSalary() && getEndSalary() == job.getEndSalary() && Objects.equals(getExpiryApply(), job.getExpiryApply()) && Objects.equals(getAvatar(), job.getAvatar()) && Objects.equals(getTitle(), job.getTitle())  && Objects.equals(getWorkForm(), job.getWorkForm()) && Objects.equals(getWorkPlace(), job.getWorkPlace()) && Objects.equals(getGender(), job.getGender()) && Objects.equals(getExperience(), job.getExperience()) && Objects.equals(getDescription(), job.getDescription()) && Objects.equals(getBenefits(), job.getBenefits()) && Objects.equals(getRequirement(), job.getRequirement()) && Objects.equals(getTechnology(), job.getTechnology()) && Objects.equals(getPosition(), job.getPosition())&& Objects.equals(getCompanyCode(), job.getCompanyCode());
     }
 
     public enum WorkForm {

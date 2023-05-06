@@ -7,19 +7,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 
 import com.example.app_supportpolywork.BaseFragment;
 import com.example.app_supportpolywork.R;
-import com.example.app_supportpolywork.data.dummy.JobDummy;
+import com.example.app_supportpolywork.data.model.Company;
 import com.example.app_supportpolywork.data.model.Job;
+import com.example.app_supportpolywork.data.network.CompanyManager;
 import com.example.app_supportpolywork.data.network.JobManager;
 import com.example.app_supportpolywork.databinding.FragmentJobBinding;
 import com.example.app_supportpolywork.util.CommonUtil;
 import com.example.app_supportpolywork.util.TaskListener;
 import com.example.app_supportpolywork.view.main_activity.MainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +41,7 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) requireActivity()).openBottomNav();
         setupJobs();
+        setUpCompany();
         setupSearchJobs();
     }
 
@@ -55,6 +57,20 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
             @Override
             public void onSuccess(Object o) {
                 mJobAdapter.submitList((List<Job>) o);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                CommonUtil.makeToast(getContext(), e.getMessage());
+            }
+        });
+    }
+
+    private void setUpCompany(){
+        CompanyManager.getInstance().getCompany(new TaskListener() {
+            @Override
+            public void onSuccess(Object o) {
+                mJobAdapter.listCompany = (ArrayList<Company>) o;
             }
 
             @Override

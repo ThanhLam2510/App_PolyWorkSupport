@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.app_supportpolywork.BaseFragment;
+import com.example.app_supportpolywork.data.model.Company;
 import com.example.app_supportpolywork.data.model.Job;
 import com.example.app_supportpolywork.data.model.support_model.ExperienceFilter;
 import com.example.app_supportpolywork.data.model.support_model.Filter;

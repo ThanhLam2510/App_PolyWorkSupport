@@ -62,6 +62,10 @@ public class JobManager {
                 job.setSlot(obj.getString("slot"));
             }
 
+            if (obj.has("company_code")) {
+                job.setCompanyCode(obj.getString("company_code"));
+            }
+
             if (obj.has("image")) {
                 job.setAvatar(obj.getString("image"));
             }

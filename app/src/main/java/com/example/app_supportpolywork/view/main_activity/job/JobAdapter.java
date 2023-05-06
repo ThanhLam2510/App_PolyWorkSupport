@@ -2,7 +2,6 @@ package com.example.app_supportpolywork.view.main_activity.job;
 
 import static com.example.app_supportpolywork.util.AdapterUtil.getJobExpiry;
 import static com.example.app_supportpolywork.util.AdapterUtil.getJobSalary;
-import static com.example.app_supportpolywork.util.AdapterUtil.getNeededPeople;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,12 +11,17 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_supportpolywork.R;
+import com.example.app_supportpolywork.data.model.Company;
 import com.example.app_supportpolywork.data.model.Job;
 import com.example.app_supportpolywork.databinding.LayoutJobBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
 
+    public ArrayList<Company> listCompany;
     private final JobAdapterListener mJobAdapterListener;
 
     protected JobAdapter(JobAdapterListener listener) {
@@ -46,6 +50,14 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
             holder.mBinding.tvWorkForm.setText(job.getWorkForm());
             holder.mBinding.tvExpiry.setText(getJobExpiry(job.getExpiryApply()));
             holder.mBinding.root.setOnClickListener(v -> mJobAdapterListener.onClickJobItem(job));
+
+            if (listCompany != null) {
+                listCompany.forEach(company -> {
+                    if (Objects.equals(company.getCompanyCode(), job.getCompanyCode())) {
+                        holder.mBinding.tvNameCompany.setText(company.getCompanyName());
+                    }
+                });
+            }
         }
     }
 
