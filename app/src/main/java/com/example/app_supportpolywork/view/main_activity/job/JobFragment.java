@@ -25,7 +25,6 @@ import java.util.List;
 
 
 public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterListener {
-
     private FragmentJobBinding mBinding;
     private JobAdapter mJobAdapter;
 
@@ -40,7 +39,8 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) requireActivity()).openBottomNav();
-        setupJobs();
+        mJobAdapter = new JobAdapter(this);
+        mBinding.rcvJobs.setAdapter(mJobAdapter);
         setUpCompany();
         setupSearchJobs();
     }
@@ -51,8 +51,6 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
     }
 
     private void setupJobs() {
-        mJobAdapter = new JobAdapter(this);
-        mBinding.rcvJobs.setAdapter(mJobAdapter);
         JobManager.getInstance().getJob(new TaskListener() {
             @Override
             public void onSuccess(Object o) {
@@ -66,11 +64,12 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
         });
     }
 
-    private void setUpCompany(){
+    private void setUpCompany() {
         CompanyManager.getInstance().getCompany(new TaskListener() {
             @Override
             public void onSuccess(Object o) {
                 mJobAdapter.listCompany = (ArrayList<Company>) o;
+                setupJobs();
             }
 
             @Override

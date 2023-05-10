@@ -127,7 +127,7 @@ public class JobManager {
         return result;
     }
 
-    public void applyJob(String userId, String cvId, String jobId, TaskListener listener) {
+    public void applyJob(String userId, String cvId, String jobId, String companyCode, TaskListener listener) {
         MyCallback<ResponseBody> myCallback = new MyCallback<ResponseBody>(listener) {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -136,7 +136,7 @@ public class JobManager {
                 listener.onSuccess(message);
             }
         };
-        Call<ResponseBody> deleteCV = Network.mService.applyJob(userId, cvId, jobId);
+        Call<ResponseBody> deleteCV = Network.mService.applyJob(userId, cvId, jobId, companyCode);
         deleteCV.enqueue(myCallback);
     }
 }

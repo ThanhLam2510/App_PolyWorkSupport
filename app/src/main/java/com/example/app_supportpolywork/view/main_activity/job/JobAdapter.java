@@ -3,6 +3,7 @@ package com.example.app_supportpolywork.view.main_activity.job;
 import static com.example.app_supportpolywork.util.AdapterUtil.getJobExpiry;
 import static com.example.app_supportpolywork.util.AdapterUtil.getJobSalary;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -18,9 +19,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
 
+    private static final String TAG = "JobAdapter";
     public ArrayList<Company> listCompany;
     private final JobAdapterListener mJobAdapterListener;
 
@@ -51,10 +56,13 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
             holder.mBinding.tvExpiry.setText(getJobExpiry(job.getExpiryApply()));
             holder.mBinding.root.setOnClickListener(v -> mJobAdapterListener.onClickJobItem(job));
 
+
             if (listCompany != null) {
                 listCompany.forEach(company -> {
                     if (Objects.equals(company.getCompanyCode(), job.getCompanyCode())) {
                         holder.mBinding.tvNameCompany.setText(company.getCompanyName());
+
+                        holder.mBinding.root.invalidate();
                     }
                 });
             }

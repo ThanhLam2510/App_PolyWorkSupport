@@ -116,6 +116,7 @@ public class JobDetailFragment extends BaseFragment implements CvItemAdapter.OnC
                     ShareFileUtil.getUser(requireContext()).getId(),
                     mSelectedCV.getId(),
                     mCurrentJob.getId(),
+                    mCurrentJob.getCompanyCode(),
                     mApplyCvTask
             );
         });

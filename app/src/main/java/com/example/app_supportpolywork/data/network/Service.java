@@ -92,7 +92,8 @@ public interface Service {
     Call<ResponseBody> applyJob(
             @Field("user_id") String userId,
             @Field("cv_id") String cvId,
-            @Field("job_id") String jobId
+            @Field("job_id") String jobId,
+            @Field("company_code") String companyCode
     );
 
     @GET("/api/company")
