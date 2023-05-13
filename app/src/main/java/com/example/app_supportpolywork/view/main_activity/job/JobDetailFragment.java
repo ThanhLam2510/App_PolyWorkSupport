@@ -37,6 +37,8 @@ public class JobDetailFragment extends BaseFragment implements CvItemAdapter.OnC
 
     private FragmentJobDetailBinding mBinding;
     private Job mCurrentJob;
+
+    private String mCompanyName;
     private List<CV> mCvList;
     private BottomSheetDialog mBottomSheetDialog;
     private RecyclerView mRecycleCVList;
@@ -136,6 +138,7 @@ public class JobDetailFragment extends BaseFragment implements CvItemAdapter.OnC
 
     private void setupJobInfo() {
         mCurrentJob = JobDetailFragmentArgs.fromBundle(getArguments()).getJob();
+        mCompanyName = JobDetailFragmentArgs.fromBundle(getArguments()).getCompanyName();
 
         Picasso.get()
                 .load(mCurrentJob.getAvatar())
@@ -143,6 +146,7 @@ public class JobDetailFragment extends BaseFragment implements CvItemAdapter.OnC
                 .error(R.drawable.img_sample)
                 .into(mBinding.imvJobAvatar);
 
+        mBinding.tvNameCompany.setText(mCompanyName);
         mBinding.tvJobTitle.setText(mCurrentJob.getTitle());
         mBinding.tvSalary.setText(getJobSalary(mCurrentJob.getStartSalary(), mCurrentJob.getEndSalary()));
         mBinding.tvWorkForm.setText(mCurrentJob.getWorkForm());

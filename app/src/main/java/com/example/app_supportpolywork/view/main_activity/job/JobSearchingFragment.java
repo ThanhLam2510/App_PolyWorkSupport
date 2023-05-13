@@ -19,6 +19,7 @@ import com.example.app_supportpolywork.data.model.support_model.FilterField;
 import com.example.app_supportpolywork.data.model.support_model.Position;
 import com.example.app_supportpolywork.data.model.support_model.Salary;
 import com.example.app_supportpolywork.data.model.support_model.Technology;
+import com.example.app_supportpolywork.data.network.CompanyManager;
 import com.example.app_supportpolywork.data.network.JobManager;
 import com.example.app_supportpolywork.databinding.FragmentJobSearchingBinding;
 import com.example.app_supportpolywork.util.CommonUtil;
@@ -51,7 +52,7 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) requireActivity()).closeBottomNav();
-        loadJobs();
+        setUpCompany();
         getFilter();
         setupFilterContentRcv();
         setupToolbar();
@@ -210,9 +211,24 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
         return job.getTitle().toLowerCase().contains(s.toLowerCase());
     }
 
-    public void loadJobs() {
+    private void setUpCompany() {
         mJobAdapter = new JobAdapter(this);
         mBinding.rcvJobs.setAdapter(mJobAdapter);
+        CompanyManager.getInstance().getCompany(new TaskListener() {
+            @Override
+            public void onSuccess(Object o) {
+                mJobAdapter.listCompany = (ArrayList<Company>) o;
+                loadJobs();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                CommonUtil.makeToast(getContext(), e.getMessage());
+            }
+        });
+    }
+
+    public void loadJobs() {
         JobManager.getInstance().getJob(new TaskListener() {
             @Override
             public void onSuccess(Object o) {
@@ -264,7 +280,7 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
     }
 
     @Override
-    public void onClickJobItem(Job job) {
-        mNavController.navigate(JobSearchingFragmentDirections.actionJobSearchingFragmentToJobDetailFragment(job));
+    public void onClickJobItem(Job job, String companyName) {
+        mNavController.navigate(JobSearchingFragmentDirections.actionJobSearchingFragmentToJobDetailFragment(job,companyName));
     }
 }

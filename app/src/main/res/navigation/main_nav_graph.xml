@@ -53,15 +53,6 @@
             android:id="@+id/action_profileFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/jobDetailFragment"
-        android:name="com.example.app_supportpolywork.view.main_activity.job.JobDetailFragment"
-        android:label="fragment_job_detail"
-        tools:layout="@layout/fragment_job_detail">
-        <argument
-            android:name="job"
-            app:argType="com.example.app_supportpolywork.data.model.Job" />
-    </fragment>
 
     <fragment
         android:id="@+id/cvTemplateFragment"
@@ -220,6 +211,18 @@
         <argument
             android:name="CV"
             app:argType="com.example.app_supportpolywork.data.model.CV" />
+    </fragment>
+    <fragment
+        android:id="@+id/jobDetailFragment"
+        android:name="com.example.app_supportpolywork.view.main_activity.job.JobDetailFragment"
+        android:label="JobDetailFragment" >
+        <argument
+            android:name="job"
+            app:argType="com.example.app_supportpolywork.data.model.Job" />
+
+        <argument
+            android:name="company_name"
+            app:argType="string"/>
     </fragment>
 
 

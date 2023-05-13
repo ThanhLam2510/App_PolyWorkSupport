@@ -86,9 +86,7 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
     }
 
     @Override
-    public void onClickJobItem(Job job) {
-        JobFragmentDirections.ActionJobFragmentToJobDetailFragment action =
-                JobFragmentDirections.actionJobFragmentToJobDetailFragment(job);
-        mNavController.navigate((NavDirections) action);
+    public void onClickJobItem(Job job, String companyName) {
+        mNavController.navigate(JobFragmentDirections.actionJobFragmentToJobDetailFragment(job, companyName));
     }
 }

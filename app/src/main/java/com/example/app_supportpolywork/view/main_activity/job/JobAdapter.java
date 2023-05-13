@@ -26,6 +26,8 @@ import java.util.concurrent.TimeUnit;
 public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
 
     private static final String TAG = "JobAdapter";
+
+    private String companyName;
     public ArrayList<Company> listCompany;
     private final JobAdapterListener mJobAdapterListener;
 
@@ -45,6 +47,15 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
     public void onBindViewHolder(@NonNull JobAdapter.JobViewHolder holder, int position) {
         Job job = getItem(position);
         if (job != null) {
+            if (listCompany != null) {
+                listCompany.forEach(company -> {
+                    if (Objects.equals(company.getCompanyCode(), job.getCompanyCode())) {
+                        holder.mBinding.tvNameCompany.setText(company.getCompanyName());
+                        companyName = company.getCompanyName();
+                    }
+                });
+            }
+
             Picasso.get().load(job.getAvatar()).placeholder(R.drawable.img_sample).error(R.drawable.img_sample)
                     .into(holder.mBinding.imvJobAvatar);
 
@@ -54,18 +65,8 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
             holder.mBinding.tvWorkPlace.setText(job.getWorkPlace());
             holder.mBinding.tvWorkForm.setText(job.getWorkForm());
             holder.mBinding.tvExpiry.setText(getJobExpiry(job.getExpiryApply()));
-            holder.mBinding.root.setOnClickListener(v -> mJobAdapterListener.onClickJobItem(job));
+            holder.mBinding.root.setOnClickListener(v -> mJobAdapterListener.onClickJobItem(job, companyName));
 
-
-            if (listCompany != null) {
-                listCompany.forEach(company -> {
-                    if (Objects.equals(company.getCompanyCode(), job.getCompanyCode())) {
-                        holder.mBinding.tvNameCompany.setText(company.getCompanyName());
-
-                        holder.mBinding.root.invalidate();
-                    }
-                });
-            }
         }
     }
 
@@ -79,6 +80,6 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobViewHolder> {
     }
 
     public interface JobAdapterListener {
-        void onClickJobItem(Job job);
+        void onClickJobItem(Job job, String companyName);
     }
 }

@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             style="@style/SpecialTextViewAsTitle"
-            android:text="PolyWorks"
+            android:text="@string/app_name"
             android:textSize="36sp"
             android:textColor="@color/primary_color"
             app:layout_constraintBottom_toBottomOf="parent"
