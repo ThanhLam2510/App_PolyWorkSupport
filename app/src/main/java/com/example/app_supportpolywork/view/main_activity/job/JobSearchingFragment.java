@@ -28,6 +28,7 @@ import com.example.app_supportpolywork.view.main_activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JobSearchingFragment extends BaseFragment implements JobFilterContentAdapter.OnClickFilterFieldListener, JobAdapter.JobAdapterListener {
     private FragmentJobSearchingBinding mBinding;
@@ -37,6 +38,8 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
     private JobAdapter mJobAdapter;
     private List<Job> mFilterJobList;
     private List<Job> mOriginJobList;
+
+    private ArrayList<Company> mOriginCompanyList;
 
     private Filter mFilter;
     private JobFilterContentAdapter mJobFilterContentAdapter;
@@ -134,13 +137,35 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
 
     private List<Job> getJobListByString(String s) {
         List<Job> jobs = new ArrayList<>();
+
+        List<Company> companyListFilter = new ArrayList<>();
+
         for (int i = 0; i < mOriginJobList.size(); i++) {
             Job job = mOriginJobList.get(i);
             if (passJobTitle(job, s) && passJobPosition(job) && passJobTechnology(job) && passJobSalary(job) && passJobExp(job)) {
                 jobs.add(job);
             }
         }
+
+        for (int i = 0; i < mOriginCompanyList.size(); i++){
+            Company company = mOriginCompanyList.get(i);
+            if (passJobCompanyName(company, s)){
+                companyListFilter.add(company);
+            }
+        }
+
+        for (int i = 0; i < mOriginJobList.size(); i++) {
+            for (int j = 0; j < companyListFilter.size(); j++) {
+                if (Objects.equals(mOriginJobList.get(i).getCompanyCode(), companyListFilter.get(j).getCompanyCode())) {
+                    jobs.add(mOriginJobList.get(i));
+                }
+            }
+        }
         return jobs;
+    }
+
+    private boolean passJobCompanyName(Company company, String s) {
+        return company.getCompanyName().toLowerCase().contains(s.toLowerCase());
     }
 
     private boolean passJobTechnology(Job job) {
@@ -217,7 +242,8 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
         CompanyManager.getInstance().getCompany(new TaskListener() {
             @Override
             public void onSuccess(Object o) {
-                mJobAdapter.listCompany = (ArrayList<Company>) o;
+                mOriginCompanyList = (ArrayList<Company>) o;
+                mJobAdapter.listCompany = mOriginCompanyList;
                 loadJobs();
             }
 

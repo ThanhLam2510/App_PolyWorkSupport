@@ -17,6 +17,7 @@ import com.example.app_supportpolywork.data.model.User;
 import com.example.app_supportpolywork.databinding.FragmentProfileBinding;
 import com.example.app_supportpolywork.util.ShareFileUtil;
 import com.example.app_supportpolywork.view.LoginActivity;
+import com.example.app_supportpolywork.view.main_activity.listCvApllied.ListCvAppliedActivity;
 import com.squareup.picasso.Picasso;
 
 
@@ -38,6 +39,11 @@ public class ProfileFragment extends BaseFragment {
         setupEditInfoBtn();
         setupChangePasswordBtn();
         setupLogoutBtn();
+
+        mBinding.btnDanhSachCongTyApply.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), ListCvAppliedActivity.class));
+            requireActivity().finish();
+        });
     }
 
     private void setupUserInfo() {

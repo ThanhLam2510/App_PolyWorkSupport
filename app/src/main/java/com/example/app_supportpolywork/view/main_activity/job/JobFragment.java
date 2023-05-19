@@ -21,6 +21,7 @@ import com.example.app_supportpolywork.util.TaskListener;
 import com.example.app_supportpolywork.view.main_activity.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -54,7 +55,9 @@ public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterLi
         JobManager.getInstance().getJob(new TaskListener() {
             @Override
             public void onSuccess(Object o) {
-                mJobAdapter.submitList((List<Job>) o);
+                List<Job> listJob = (List<Job>) o;
+                Collections.reverse(listJob);
+                mJobAdapter.submitList(listJob);
             }
 
             @Override
