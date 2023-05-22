@@ -28,6 +28,7 @@ import com.example.app_supportpolywork.view.main_activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class JobSearchingFragment extends BaseFragment implements JobFilterContentAdapter.OnClickFilterFieldListener, JobAdapter.JobAdapterListener {
@@ -147,20 +148,20 @@ public class JobSearchingFragment extends BaseFragment implements JobFilterConte
             }
         }
 
-        for (int i = 0; i < mOriginCompanyList.size(); i++){
-            Company company = mOriginCompanyList.get(i);
-            if (passJobCompanyName(company, s)){
-                companyListFilter.add(company);
-            }
-        }
-
-        for (int i = 0; i < mOriginJobList.size(); i++) {
-            for (int j = 0; j < companyListFilter.size(); j++) {
-                if (Objects.equals(mOriginJobList.get(i).getCompanyCode(), companyListFilter.get(j).getCompanyCode())) {
-                    jobs.add(mOriginJobList.get(i));
-                }
-            }
-        }
+//        for (int i = 0; i < mOriginCompanyList.size(); i++){
+//            Company company = mOriginCompanyList.get(i);
+//            if (passJobCompanyName(company, s)){
+//                companyListFilter.add(company);
+//            }
+//        }
+//
+//        for (int i = 0; i < mOriginJobList.size(); i++) {
+//            for (int j = 0; j < companyListFilter.size(); j++) {
+//                if (Objects.equals(mOriginJobList.get(i).getCompanyCode(), companyListFilter.get(j).getCompanyCode())) {
+//                    jobs.add(mOriginJobList.get(i));
+//                }
+//            }
+//        }
         return jobs;
     }
 

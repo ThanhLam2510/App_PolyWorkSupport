@@ -40,9 +40,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.main_activity.listCvApllied.ListCvAppliedActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity

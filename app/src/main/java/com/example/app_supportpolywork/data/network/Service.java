@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Service {
 
@@ -95,6 +96,9 @@ public interface Service {
             @Field("job_id") String jobId,
             @Field("company_code") String companyCode
     );
+
+    @GET("/api/userJob")
+    Call<ResponseBody> getCvApplied();
 
     @GET("/api/company")
     Call<ResponseBody> getCompany();

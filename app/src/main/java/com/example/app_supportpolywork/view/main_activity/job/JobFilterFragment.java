@@ -229,7 +229,7 @@ public class JobFilterFragment extends BaseFragment {
 
     private void setupSpnTechnology() {
         mArrTechnology = getStringTechnology();
-        mTechnologyAdapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, mArrTechnology);
+        mTechnologyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mArrTechnology);
         mBinding.spnTechnology.setAdapter(mTechnologyAdapter);
         mBinding.spnTechnology.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

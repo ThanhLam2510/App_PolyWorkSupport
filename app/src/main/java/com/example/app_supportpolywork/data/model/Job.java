@@ -3,26 +3,61 @@ package com.example.app_supportpolywork.data.model;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Job  implements Serializable {
+import kotlin.Pair;
+
+public class Job implements Serializable {
+    @SerializedName("id")
+
     private String id;
+    @SerializedName("image")
+
     private String avatar;
+    @SerializedName("job_name")
+
     private String title;
+    @SerializedName("salary_min")
+
     private long startSalary;
+    @SerializedName("salary_max")
+
     private long endSalary;
+    @SerializedName("work_form")
+
     private String workForm;
+    @SerializedName("work_place")
+
     private String workPlace;
+    @SerializedName("slot")
+
     private String slot;
+    @SerializedName("gender")
+
     private String gender;
+    @SerializedName("experience")
+
     private String experience;
+    @SerializedName("description")
+
     private String description;
+    @SerializedName("benefits")
+
     private String benefits;
+
+    @SerializedName("requirement")
+
     private String requirement;
+    @SerializedName("technology")
+
     private String technology;
+
     private String position;
     private String expiryApply;
+    @SerializedName("job_code")
 
     private String companyCode;
 

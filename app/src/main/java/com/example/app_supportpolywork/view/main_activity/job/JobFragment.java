@@ -23,6 +23,7 @@ import com.example.app_supportpolywork.view.main_activity.MainActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 public class JobFragment extends BaseFragment implements JobAdapter.JobAdapterListener {
