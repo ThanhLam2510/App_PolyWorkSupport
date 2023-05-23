@@ -229,7 +229,7 @@
     </fragment>
     <fragment
         android:id="@+id/listCvAppliedFrg"
-        android:name="com.example.app_supportpolywork.view.main_activity.listCvApllied.ListCvAppliedFrg"
+        android:name="com.example.app_supportpolywork.view.main_activity.listCvApllied.ListCvAppliedActivtiy"
         android:label="ListCvAppliedFrg" />
 
 

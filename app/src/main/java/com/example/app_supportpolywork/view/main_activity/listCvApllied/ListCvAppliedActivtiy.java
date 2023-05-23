@@ -1,14 +1,9 @@
 package com.example.app_supportpolywork.view.main_activity.listCvApllied;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.app_supportpolywork.BaseFragment;
 import com.example.app_supportpolywork.data.model.CVApplied.CVApplied;
 import com.example.app_supportpolywork.data.model.Company;
 import com.example.app_supportpolywork.data.model.User;
@@ -24,22 +19,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class ListCvAppliedFrg extends BaseFragment {
+public class ListCvAppliedActivtiy extends AppCompatActivity {
 
     private ActivityListCvAppliedBinding mBinding;
 
     private ListCvAppliedAdapter mListCvAppliedAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = ActivityListCvAppliedBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBinding = ActivityListCvAppliedBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         mListCvAppliedAdapter = new ListCvAppliedAdapter(cvApplied -> {});
         mBinding.rcvCV.setAdapter(mListCvAppliedAdapter);
 
@@ -57,7 +48,7 @@ public class ListCvAppliedFrg extends BaseFragment {
 
             @Override
             public void onError(Exception e) {
-                CommonUtil.makeToast(getContext(), e.getMessage());
+                CommonUtil.makeToast(ListCvAppliedActivtiy.this, e.getMessage());
             }
         });
     }
@@ -68,7 +59,7 @@ public class ListCvAppliedFrg extends BaseFragment {
             public void onSuccess(Object o) {
                 List<CVApplied> cvApplieds = (List<CVApplied>) o;
                 Collections.reverse(cvApplieds);
-                User user = ShareFileUtil.getUser(requireContext());
+                User user = ShareFileUtil.getUser(ListCvAppliedActivtiy.this);
 
                 List<CVApplied> cvAppliedListAdapter = new  ArrayList();
 
@@ -84,20 +75,14 @@ public class ListCvAppliedFrg extends BaseFragment {
 
             @Override
             public void onError(Exception e) {
-                CommonUtil.makeToast(requireContext(), e.getMessage());
+                CommonUtil.makeToast(ListCvAppliedActivtiy.this, e.getMessage());
             }
         });
     }
 
     private void onClickView(){
         mBinding.buttonBack.setOnClickListener(view -> {
-            mNavController.popBackStack();
+            finish();
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
     }
 }
